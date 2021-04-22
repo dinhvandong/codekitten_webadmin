@@ -21,7 +21,7 @@ import PropTypes from "prop-types";
 import { Paper, TablePagination } from "@material-ui/core";
 import { Button } from "react-bootstrap";
 import { Create } from "@material-ui/icons";
-import AddMore from "./AddNotification";
+import AddMore from "./AddBackDropList";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -43,7 +43,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default class Notifications extends React.Component {
+export default class BackDropList extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangePage = this.handleChangePage.bind(this);
@@ -91,7 +91,7 @@ export default class Notifications extends React.Component {
   }
 
   componentDidMount() {
-    const apiUrl = "http://localhost:8080/api/fileasset/getAll";
+    const apiUrl = "http://localhost:8080/api/asset/getByType/backdrop";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -184,7 +184,7 @@ export default class Notifications extends React.Component {
                     }}
                     align="left"
                   >
-                    Mô tả
+                    Groups
                   </TableCell>
                   <TableCell
                     style={{
@@ -193,7 +193,7 @@ export default class Notifications extends React.Component {
                     }}
                     align="right"
                   >
-                    Thời gian tạo
+                    Loại tệp 
                   </TableCell>
                   <TableCell
                     style={{
@@ -238,12 +238,11 @@ export default class Notifications extends React.Component {
                       align="right"
                       style={{ maxWidth: "200px", textAlign: "left" }}
                     >
-                      {row.desc}{" "}
+                    {row.tags.join('\r\n')}
+
                     </TableCell>
                     <TableCell align="right">
-                      {new Date(
-                        new Date(row.createdTime).toUTCString()
-                      ).toLocaleString()}{" "}
+                      {row.dataFormat}
                     </TableCell>
 
                     <TableCell align="left">
@@ -255,7 +254,7 @@ export default class Notifications extends React.Component {
                             height: 75,
                             borderRadius: 5,
                           }}
-                          src={"http://"+row.url}
+                          src={"http://"+row.base64}
                         />
                       </div>{" "}
                     </TableCell>
@@ -265,7 +264,7 @@ export default class Notifications extends React.Component {
                     align="right"
                   >
                   <div style={{whiteSpace:'pre-line'}}>
-                  <a href={"http://"+row.url}><u>Copy link</u></a>
+                  <a href={"http://"+row.base64}><u>Copy link</u></a>
                   </div>
                    
                   </TableCell>

@@ -21,7 +21,7 @@ import PropTypes from "prop-types";
 import { Paper, TablePagination } from "@material-ui/core";
 import { Button } from "react-bootstrap";
 import { Create } from "@material-ui/icons";
-import AddMore from "./AddNotification";
+import AddMore from "./AddImageList";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -43,7 +43,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default class Notifications extends React.Component {
+export default class ImageList extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangePage = this.handleChangePage.bind(this);
@@ -91,7 +91,7 @@ export default class Notifications extends React.Component {
   }
 
   componentDidMount() {
-    const apiUrl = "http://localhost:8080/api/fileasset/getAll";
+    const apiUrl = "http://localhost:8080/api/fileasset/getAllByType/image";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -206,6 +206,15 @@ export default class Notifications extends React.Component {
                   </TableCell>
 
                   <TableCell
+                    style={{
+                      color: "#2d365d",
+                      fontWeight: "bold",
+                    }}
+                    align="left"
+                  >
+                    Định dạng
+                  </TableCell>
+                  <TableCell
                   style={{
                     color: "#2d365d",
                     fontWeight: "bold",
@@ -255,7 +264,7 @@ export default class Notifications extends React.Component {
                             height: 75,
                             borderRadius: 5,
                           }}
-                          src={"http://"+row.url}
+                          src={row.url}
                         />
                       </div>{" "}
                     </TableCell>
@@ -264,8 +273,19 @@ export default class Notifications extends React.Component {
                     style={{ maxWidth: "200px", textAlign: "left" }}
                     align="right"
                   >
+                  {
+                    row.fileextend
+
+                  }
+                   
+                  </TableCell>
+
+                    <TableCell
+                    style={{ maxWidth: "200px", textAlign: "left" }}
+                    align="right"
+                  >
                   <div style={{whiteSpace:'pre-line'}}>
-                  <a href={"http://"+row.url}><u>Copy link</u></a>
+                  <a href={row.url}><u>Copy link</u></a>
                   </div>
                    
                   </TableCell>

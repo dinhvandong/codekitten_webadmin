@@ -10,15 +10,18 @@ import TableRow from "@material-ui/core/TableRow";
 import TableContainer from "@material-ui/core/TableContainer";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
+
+import PlushOne from "@material-ui/icons/Add"
 import React from "react";
 import Modal from "react-awesome-modal";
-
 //import bindAll from "lodash.bindall";
-
 //import { connect } from "react-redux";
 //import { compose } from "redux";
 import PropTypes from "prop-types";
 import { Paper, TablePagination } from "@material-ui/core";
+import { Button } from "react-bootstrap";
+import { Create } from "@material-ui/icons";
+import AddMore from "./AddSoundList";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -40,27 +43,24 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default class UserProfile extends React.Component {
+export default class ImageList extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
-
-    //   bindAll(this, [
-    //     "closePopup",
-    //     "handleChangePage",
-    //     "handleChangeRowsPerPage","convertStringtoDate","formatDate","convertUTCDateToLocalDate"
-    // ]);
-    this.state = { user: [], page: 0, rowsPerPage: 5, emptyRows: 0 };
-
-    this.state.user = [];
+    this.onClickShowpopUp = this.onClickShowpopUp.bind(this);
+    this.onClickClosePopup = this.onClickClosePopup.bind(this);
+    this.playSound = this.playSound.bind(this);
+    this.state = { fileAssets: [], page: 0, rowsPerPage: 5, emptyRows: 0 , showpopup:false};
+    this.state.fileAssets = [];
     this.state.page = 0;
+    this.state.showpopup = false;
     this.state.rowsPerPage = 5;
     this.state.emptyRows =
       this.state.rowsPerPage -
       Math.min(
         this.state.rowsPerPage,
-        this.state.user.length - this.state.page * this.state.rowsPerPage
+        this.state.fileAssets.length - this.state.page * this.state.rowsPerPage
       );
   }
 
@@ -79,6 +79,12 @@ export default class UserProfile extends React.Component {
     return new Date(dateString);
   }
 
+  playSound()
+  {
+    var x = document.getElementById("myAudio"); 
+    x.play(); 
+  }
+
   formatDate(date) {
     var d = new Date(date),
       month = "" + (d.getMonth() + 1),
@@ -92,11 +98,11 @@ export default class UserProfile extends React.Component {
   }
 
   componentDidMount() {
-    const apiUrl = "http://localhost:8080/api/project/getAll";
+    const apiUrl = "http://localhost:8080/api/fileasset/getAllByType/sound";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ user: data });
+        this.setState({ fileAssets: data });
       });
   }
 
@@ -113,17 +119,39 @@ export default class UserProfile extends React.Component {
     return newDate;
   }
 
+  onClickShowpopUp()
+  {
+
+    this.setState({showpopup:true});
+
+  }
+  onClickClosePopup()
+  {
+    this.setState({showpopup:false});
+
+
+  }
+
   render() {
-    const { user } = this.state;
+    const { fileAssets } = this.state;
     const { page } = this.state;
 
+    console.log("SHowpup:", this.state.showpopup);
+    //const {showpopup} = this.state;
+
     const { rowsPerPage } = this.state;
+    const {showpopup} = this.state;
     const emptyRows =
-      rowsPerPage - Math.min(rowsPerPage, user.length - page * rowsPerPage);
+      rowsPerPage - Math.min(rowsPerPage, fileAssets.length - page * rowsPerPage);
 
     return (
-      <div>
-        <Paper
+      <div style={{ flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',}}>
+      <button style={{marginBottom:20, width:60, height:40, borderRadius:5}} onClick = {this.onClickShowpopUp}>
+      <PlushOne style={{ alignSelf:'center'}} />
+      </button>
+      <Paper
           style={{
             backgroundColor: "#FFF",
           }}
@@ -132,7 +160,7 @@ export default class UserProfile extends React.Component {
             <Table
               style={{
                 backgroundColor: "#FFF",
-                width: "800px",
+                width: "100%",
                 //height: "800px",
                 alignSelf: "center",
                 margin: 0,
@@ -154,14 +182,14 @@ export default class UserProfile extends React.Component {
                       fontWeight: "bold",
                     }}
                   >
-                    Tên dự án
+                    Tên file
                   </TableCell>
                   <TableCell
                     style={{
                       color: "#2d365d",
                       fontWeight: "bold",
                     }}
-                    align="right"
+                    align="left"
                   >
                     Mô tả
                   </TableCell>
@@ -179,19 +207,29 @@ export default class UserProfile extends React.Component {
                       color: "#2d365d",
                       fontWeight: "bold",
                     }}
-                    align="right"
+                    align="left"
                   >
                     Hình ảnh
                   </TableCell>
+
+                  <TableCell
+                  style={{
+                    color: "#2d365d",
+                    fontWeight: "bold",
+                  }}
+                  align="left"
+                >
+                  Link tải
+                </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {(rowsPerPage > 0
-                  ? user.slice(
+                  ? fileAssets.slice(
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
                     )
-                  : user
+                  : fileAssets
                 ).map((row, index) => (
                   <TableRow key={row._id}>
                     <TableCell component="th" scope="row">
@@ -215,19 +253,38 @@ export default class UserProfile extends React.Component {
                       ).toLocaleString()}{" "}
                     </TableCell>
 
-                    <TableCell align="right">
+                    <TableCell align="left">
                       {" "}
                       <div>
-                        <img
+                        <img onClick = {this.playSound}
                           style={{
                             width: 75,
                             height: 75,
                             borderRadius: 5,
                           }}
-                          src={row.icon}
+                          src={"https://icon-library.com/images/wav-icon/wav-icon-6.jpg"}
+                          //{"http://"+row.url}
                         />
+                        <audio id="myAudio" 
+                        
+                        >
+                        <source src={"http://"+row.url} type="audio/wav"/>
+
+                        
+                        </audio>
+                        
                       </div>{" "}
                     </TableCell>
+
+                    <TableCell
+                    style={{ maxWidth: "200px", textAlign: "left" }}
+                    align="right"
+                  >
+                  <div style={{whiteSpace:'pre-line'}}>
+                  <a href={"http://"+row.url}><u>Copy link</u></a>
+                  </div>
+                   
+                  </TableCell>
                     <TableCell align="right">
                       <CreateIcon />
                     </TableCell>
@@ -250,10 +307,10 @@ export default class UserProfile extends React.Component {
             </Table>
           </TableContainer>
 
-          <TablePagination
+          <TablePagination style={{marginRight:0}}
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={user.length}
+            count={fileAssets.length}
             rowsPerPage={rowsPerPage}
             page={page}
             backIconButtonProps={{
@@ -264,12 +321,29 @@ export default class UserProfile extends React.Component {
             }}
             onChangePage={this.handleChangePage}
             onChangeRowsPerPage={this.handleChangeRowsPerPage}
-
             //  onChangePage={handleChangePage}
             //  onChangeRowsPerPage={handleChangeRowsPerPage}
           />
         </Paper>
+
+       
+        
+
+        <div>
+
+            {
+                showpopup ? <AddMore closePopUp={this.onClickClosePopup}  />
+                :<div></div> 
+            }  
+
+       
+        </div>
+
+       
+        
+       
       </div>
+      
     );
   }
 }

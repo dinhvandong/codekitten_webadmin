@@ -24,100 +24,63 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 import Language from "@material-ui/icons/Language";
-// core components/views for Admin layout
-import DashboardPage from "views/Dashboard/Dashboard.js";
-import UserProfile from "views/UserProfile/UserProfile.js";
-import TableList from "views/TableList/TableList.js";
-import Typography from "views/Typography/Typography.js";
-import Icons from "views/Icons/Icons.js";
-import Maps from "views/Maps/Maps.js";
+
 import NotificationsPage from "views/Notifications/Notifications.js";
-import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
-// core components/views for RTL layout
-import RTLPage from "views/RTLPage/RTLPage.js";
+import Project from "views/Project/Project";
+import ImageList from "views/ImageList/ImageList";
+import SoundList from "views/SoundList/SoundList";
+import SpriteList from "views/SpriteList/SpriteList";
+import BackDropList from "views/BackDropList/BackDropList";
 
 const dashboardRoutes = [
-  // {
-  //   path: "/dashboard",
-  //   name: "Dashboard",
-  //   rtlName: "لوحة القيادة",
-  //   icon: Dashboard,
-  //   component: DashboardPage,
-  //   layout: "/admin"
-  // },
   {
-    path: "/user",
+    path: "/project",
     name: "Dự án",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
-    component: UserProfile,
+    component: Project,
     layout: "/admin"
   },
   {
-    path: "/table",
+    path: "/image",
     name: "Hình ảnh",
     rtlName: "قائمة الجدول",
     icon: "content_paste",
-    component: TableList,
+    component: ImageList,
     layout: "/admin"
   },
   {
-    path: "/typography",
+    path: "/sound",
     name: "Âm thanh",
     rtlName: "طباعة",
     icon: LibraryBooks,
-    component: Typography,
+    component: SoundList,
     layout: "/admin"
   },
   {
-    path: "/icons",
+    path: "/sprite",
     name: "Nhân vật",
     rtlName: "الرموز",
     icon: BubbleChart,
-    component: Icons,
+    component: SpriteList,
     layout: "/admin"
   },
   {
-    path: "/icons",
+    path: "/backdrop",
     name: "Hình nền",
     rtlName: "الرموز",
     icon: BubbleChart,
-    component: Icons,
+    component: BackDropList,
     layout: "/admin"
   },
-  // {
-  //   path: "/maps",
-  //   name: "Maps",
-  //   rtlName: "خرائط",
-  //   icon: LocationOn,
-  //   component: Maps,
-  //   layout: "/admin"
-  // },
   {
     path: "/notifications",
-    name: "Notifications",
+    name: "Thông báo",
     rtlName: "إخطارات",
     icon: Notifications,
     component: NotificationsPage,
     layout: "/admin"
   }
-  // ,
-  // {
-  //   path: "/rtl-page",
-  //   name: "RTL Support",
-  //   rtlName: "پشتیبانی از راست به چپ",
-  //   icon: Language,
-  //   component: RTLPage,
-  //   layout: "/rtl"
-  // },
-  // {
-  //   path: "/upgrade-to-pro",
-  //   name: "Upgrade To PRO",
-  //   rtlName: "التطور للاحترافية",
-  //   icon: Unarchive,
-  //   component: UpgradeToPro,
-  //   layout: "/admin"
-  // }
 ];
 
 export default dashboardRoutes;

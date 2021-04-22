@@ -11,7 +11,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import PlushOne from "@material-ui/icons/Add"
+import PlushOne from "@material-ui/icons/Add";
 import React from "react";
 import Modal from "react-awesome-modal";
 //import bindAll from "lodash.bindall";
@@ -21,7 +21,7 @@ import PropTypes from "prop-types";
 import { Paper, TablePagination } from "@material-ui/core";
 import { Button } from "react-bootstrap";
 import { Create } from "@material-ui/icons";
-import AddMore from "./AddNotification";
+import AddMore from "./AddSpriteList";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -43,15 +43,21 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default class Notifications extends React.Component {
+export default class SpriteList extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
     this.onClickShowpopUp = this.onClickShowpopUp.bind(this);
     this.onClickClosePopup = this.onClickClosePopup.bind(this);
-    this.state = { fileAssets: [], page: 0, rowsPerPage: 5, emptyRows: 0 , showpopup:false};
-    this.state.fileAssets = [];
+    this.state = {
+      spriteList: [],
+      page: 0,
+      rowsPerPage: 5,
+      emptyRows: 0,
+      showpopup: false,
+    };
+    this.state.spriteList = [];
     this.state.page = 0;
     this.state.showpopup = false;
     this.state.rowsPerPage = 5;
@@ -59,7 +65,7 @@ export default class Notifications extends React.Component {
       this.state.rowsPerPage -
       Math.min(
         this.state.rowsPerPage,
-        this.state.fileAssets.length - this.state.page * this.state.rowsPerPage
+        this.state.spriteList.length - this.state.page * this.state.rowsPerPage
       );
   }
 
@@ -91,11 +97,11 @@ export default class Notifications extends React.Component {
   }
 
   componentDidMount() {
-    const apiUrl = "http://localhost:8080/api/fileasset/getAll";
+    const apiUrl = "http://localhost:8080/api/sprite/getAll";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ fileAssets: data });
+        this.setState({ spriteList: data });
       });
   }
 
@@ -112,39 +118,35 @@ export default class Notifications extends React.Component {
     return newDate;
   }
 
-  onClickShowpopUp()
-  {
-
-    this.setState({showpopup:true});
-
+  onClickShowpopUp() {
+    this.setState({ showpopup: true });
   }
-  onClickClosePopup()
-  {
-    this.setState({showpopup:false});
-
-
+  onClickClosePopup() {
+    this.setState({ showpopup: false });
   }
 
   render() {
-    const { fileAssets } = this.state;
+    const { spriteList } = this.state;
     const { page } = this.state;
 
     console.log("SHowpup:", this.state.showpopup);
     //const {showpopup} = this.state;
 
     const { rowsPerPage } = this.state;
-    const {showpopup} = this.state;
+    const { showpopup } = this.state;
     const emptyRows =
-      rowsPerPage - Math.min(rowsPerPage, fileAssets.length - page * rowsPerPage);
+      rowsPerPage -
+      Math.min(rowsPerPage, spriteList.length - page * rowsPerPage);
 
     return (
-      <div style={{ flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',}}>
-      <button style={{marginBottom:20, width:60, height:40, borderRadius:5}} onClick = {this.onClickShowpopUp}>
-      <PlushOne style={{ alignSelf:'center'}} />
-      </button>
-      <Paper
+      <div style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <button
+          style={{ marginBottom: 20, width: 60, height: 40, borderRadius: 5 }}
+          onClick={this.onClickShowpopUp}
+        >
+          <PlushOne style={{ alignSelf: "center" }} />
+        </button>
+        <Paper
           style={{
             backgroundColor: "#FFF",
           }}
@@ -184,17 +186,9 @@ export default class Notifications extends React.Component {
                     }}
                     align="left"
                   >
-                    Mô tả
+                    Thể loại
                   </TableCell>
-                  <TableCell
-                    style={{
-                      color: "#2d365d",
-                      fontWeight: "bold",
-                    }}
-                    align="right"
-                  >
-                    Thời gian tạo
-                  </TableCell>
+
                   <TableCell
                     style={{
                       color: "#2d365d",
@@ -206,23 +200,23 @@ export default class Notifications extends React.Component {
                   </TableCell>
 
                   <TableCell
-                  style={{
-                    color: "#2d365d",
-                    fontWeight: "bold",
-                  }}
-                  align="left"
-                >
-                  Link tải
-                </TableCell>
+                    style={{
+                      color: "#2d365d",
+                      fontWeight: "bold",
+                    }}
+                    align="left"
+                  >
+                    Link tải
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {(rowsPerPage > 0
-                  ? fileAssets.slice(
+                  ? spriteList.slice(
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
                     )
-                  : fileAssets
+                  : spriteList
                 ).map((row, index) => (
                   <TableRow key={row._id}>
                     <TableCell component="th" scope="row">
@@ -238,14 +232,8 @@ export default class Notifications extends React.Component {
                       align="right"
                       style={{ maxWidth: "200px", textAlign: "left" }}
                     >
-                      {row.desc}{" "}
+                      {row.tags}{" "}
                     </TableCell>
-                    <TableCell align="right">
-                      {new Date(
-                        new Date(row.createdTime).toUTCString()
-                      ).toLocaleString()}{" "}
-                    </TableCell>
-
                     <TableCell align="left">
                       {" "}
                       <div>
@@ -255,20 +243,20 @@ export default class Notifications extends React.Component {
                             height: 75,
                             borderRadius: 5,
                           }}
-                          src={"http://"+row.url}
+                          src={"http://" + row.costumes[0].base64}
                         />
                       </div>{" "}
                     </TableCell>
-
                     <TableCell
-                    style={{ maxWidth: "200px", textAlign: "left" }}
-                    align="right"
-                  >
-                  <div style={{whiteSpace:'pre-line'}}>
-                  <a href={"http://"+row.url}><u>Copy link</u></a>
-                  </div>
-                   
-                  </TableCell>
+                      style={{ maxWidth: "200px", textAlign: "left" }}
+                      align="right"
+                    >
+                      <div style={{ whiteSpace: "pre-line" }}>
+                        <a href={"http://" + row.costumes[0].base64}>
+                          <u>Copy link</u>
+                        </a>
+                      </div>
+                    </TableCell>
                     <TableCell align="right">
                       <CreateIcon />
                     </TableCell>
@@ -277,7 +265,6 @@ export default class Notifications extends React.Component {
                     </TableCell>
                   </TableRow>
                 ))}
-
                 {emptyRows > 0 && (
                   <TableRow
                     style={{
@@ -291,10 +278,11 @@ export default class Notifications extends React.Component {
             </Table>
           </TableContainer>
 
-          <TablePagination style={{marginRight:0}}
+          <TablePagination
+            style={{ marginRight: 0 }}
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={fileAssets.length}
+            count={spriteList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             backIconButtonProps={{
@@ -310,24 +298,14 @@ export default class Notifications extends React.Component {
           />
         </Paper>
 
-       
-        
-
         <div>
-
-            {
-                showpopup ? <AddMore closePopUp={this.onClickClosePopup}  />
-                :<div></div> 
-            }  
-
-       
+          {showpopup ? (
+            <AddMore closePopUp={this.onClickClosePopup} />
+          ) : (
+            <div></div>
+          )}
         </div>
-
-       
-        
-       
       </div>
-      
     );
   }
 }

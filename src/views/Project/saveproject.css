@@ -1,0 +1,119 @@
+.openbutton {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+.Modal {
+  font-family: Raleway;
+  background-color: #242222;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  height: 90vh;
+  width: 50vw;
+  margin-right: -50%;
+  color: white;
+  border-radius: 30;
+  /* border-radius: 400px; */
+}
+
+/* The popup form - hidden by default */
+
+.formpopup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px;
+  border-width: 10px;
+  border-radius: 20;
+  display: "flex";
+  justify-content: "center";
+  background-color: 'rgba(52, 52, 52, 0.8)';
+  /* flex-direction:"row"; */
+
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+
+.formcontainer {
+  max-width: 300px;
+  padding: 10px;
+  border-width: 10px;
+  border-top-left-radius: 20;
+  border-top-right-radius: 20;
+  background-color: #FFF;
+}
+
+/* Full-width input fields */
+
+.formcontainer input[type=text], .formcontainer input[type=password], .formcontainer textarea[type=text] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* When the inputs get focus, do something */
+
+.formcontainer input[type=text]:focus,
+ .formcontainer input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+
+.formcontainer .btn {
+  background-color: #2d365d;
+  color: white;
+  font-weight: bold;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.label {
+  color: #2d365d;
+}
+
+/* Add a red background color to the cancel button */
+
+.formcontainer .cancel {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+/* Add some hover effects to buttons */
+
+.formcontainer .btn:hover, .openbutton:hover {
+  opacity: 1;
+}

@@ -21,7 +21,8 @@ import PropTypes from "prop-types";
 import { Paper, TablePagination } from "@material-ui/core";
 import { Button } from "react-bootstrap";
 import { Create } from "@material-ui/icons";
-import AddMore from "./AddNotification";
+import AddProject from './AddProject'
+import AddMore from "./AddMore";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -43,15 +44,15 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default class Notifications extends React.Component {
+export default class Project extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
     this.onClickShowpopUp = this.onClickShowpopUp.bind(this);
     this.onClickClosePopup = this.onClickClosePopup.bind(this);
-    this.state = { fileAssets: [], page: 0, rowsPerPage: 5, emptyRows: 0 , showpopup:false};
-    this.state.fileAssets = [];
+    this.state = { user: [], page: 0, rowsPerPage: 5, emptyRows: 0 , showpopup:false};
+    this.state.user = [];
     this.state.page = 0;
     this.state.showpopup = false;
     this.state.rowsPerPage = 5;
@@ -59,7 +60,7 @@ export default class Notifications extends React.Component {
       this.state.rowsPerPage -
       Math.min(
         this.state.rowsPerPage,
-        this.state.fileAssets.length - this.state.page * this.state.rowsPerPage
+        this.state.user.length - this.state.page * this.state.rowsPerPage
       );
   }
 
@@ -91,11 +92,11 @@ export default class Notifications extends React.Component {
   }
 
   componentDidMount() {
-    const apiUrl = "http://localhost:8080/api/fileasset/getAll";
+    const apiUrl = "http://localhost:8080/api/project/getAll";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ fileAssets: data });
+        this.setState({ user: data });
       });
   }
 
@@ -126,7 +127,7 @@ export default class Notifications extends React.Component {
   }
 
   render() {
-    const { fileAssets } = this.state;
+    const { user } = this.state;
     const { page } = this.state;
 
     console.log("SHowpup:", this.state.showpopup);
@@ -135,7 +136,7 @@ export default class Notifications extends React.Component {
     const { rowsPerPage } = this.state;
     const {showpopup} = this.state;
     const emptyRows =
-      rowsPerPage - Math.min(rowsPerPage, fileAssets.length - page * rowsPerPage);
+      rowsPerPage - Math.min(rowsPerPage, user.length - page * rowsPerPage);
 
     return (
       <div style={{ flex: 1,
@@ -175,14 +176,14 @@ export default class Notifications extends React.Component {
                       fontWeight: "bold",
                     }}
                   >
-                    Tên file
+                    Tên dự án
                   </TableCell>
                   <TableCell
                     style={{
                       color: "#2d365d",
                       fontWeight: "bold",
                     }}
-                    align="left"
+                    align="right"
                   >
                     Mô tả
                   </TableCell>
@@ -200,29 +201,19 @@ export default class Notifications extends React.Component {
                       color: "#2d365d",
                       fontWeight: "bold",
                     }}
-                    align="left"
+                    align="right"
                   >
                     Hình ảnh
                   </TableCell>
-
-                  <TableCell
-                  style={{
-                    color: "#2d365d",
-                    fontWeight: "bold",
-                  }}
-                  align="left"
-                >
-                  Link tải
-                </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {(rowsPerPage > 0
-                  ? fileAssets.slice(
+                  ? user.slice(
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
                     )
-                  : fileAssets
+                  : user
                 ).map((row, index) => (
                   <TableRow key={row._id}>
                     <TableCell component="th" scope="row">
@@ -246,7 +237,7 @@ export default class Notifications extends React.Component {
                       ).toLocaleString()}{" "}
                     </TableCell>
 
-                    <TableCell align="left">
+                    <TableCell align="right">
                       {" "}
                       <div>
                         <img
@@ -255,20 +246,10 @@ export default class Notifications extends React.Component {
                             height: 75,
                             borderRadius: 5,
                           }}
-                          src={"http://"+row.url}
+                          src={row.icon}
                         />
                       </div>{" "}
                     </TableCell>
-
-                    <TableCell
-                    style={{ maxWidth: "200px", textAlign: "left" }}
-                    align="right"
-                  >
-                  <div style={{whiteSpace:'pre-line'}}>
-                  <a href={"http://"+row.url}><u>Copy link</u></a>
-                  </div>
-                   
-                  </TableCell>
                     <TableCell align="right">
                       <CreateIcon />
                     </TableCell>
@@ -291,10 +272,10 @@ export default class Notifications extends React.Component {
             </Table>
           </TableContainer>
 
-          <TablePagination style={{marginRight:0}}
+          <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={fileAssets.length}
+            count={user.length}
             rowsPerPage={rowsPerPage}
             page={page}
             backIconButtonProps={{
