@@ -6,6 +6,7 @@ import iconExit from "../../assets/img/ic_exit.png";
 //import iconAvatar from "./img_avatar2.png";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
+import { ConfigServer } from "../../config_server";
 
 export default class AddBackDropList extends React.Component {
   constructor(props) {
@@ -91,16 +92,16 @@ export default class AddBackDropList extends React.Component {
   };
 
   onSaveProject(e) {
-    e.preventDefault();
-    
-    const url = "http://localhost:8080/api/asset/create";
+    //e.preventDefault();
+
+    const url = ConfigServer.host + "/api/asset/create";
     const name = this.state.name;
     const base64 = this.state.imagePreviewUrl;
     const assetId = this.state.name;
     const tags = this.state.arrayTagsString;
     const bitmapResolution = 1;
     const md5ext = this.state.name;
-    const dataFormat = "svg";
+    const dataFormat = base64.split('.').pop();
     const rotationCenterX = 240;
     const rotationCenterY = 180;
     const type = "backdrop";

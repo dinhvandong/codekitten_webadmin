@@ -22,6 +22,7 @@ import { Paper, TablePagination } from "@material-ui/core";
 import { Button } from "react-bootstrap";
 import { Create } from "@material-ui/icons";
 import AddMore from "./AddBackDropList";
+import { ConfigServer } from "../../config_server";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -91,7 +92,7 @@ export default class BackDropList extends React.Component {
   }
 
   componentDidMount() {
-    const apiUrl = "http://localhost:8080/api/asset/getByType/backdrop";
+    const apiUrl = ConfigServer.host + "/api/asset/getByType/backdrop";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -254,7 +255,7 @@ export default class BackDropList extends React.Component {
                             height: 75,
                             borderRadius: 5,
                           }}
-                          src={"http://"+row.base64}
+                          src={row.base64}
                         />
                       </div>{" "}
                     </TableCell>
@@ -264,7 +265,7 @@ export default class BackDropList extends React.Component {
                     align="right"
                   >
                   <div style={{whiteSpace:'pre-line'}}>
-                  <a href={"http://"+row.base64}><u>Copy link</u></a>
+                  <a href={row.base64}><u>Copy link</u></a>
                   </div>
                    
                   </TableCell>

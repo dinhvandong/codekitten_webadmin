@@ -7,6 +7,7 @@ import iconExit from "../../assets/img/ic_exit.png";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { colourOptions } from "../data/data";
+import { ConfigServer } from "../../config_server";
 
 export default class AddSpriteList extends React.Component {
   constructor(props) {
@@ -142,7 +143,7 @@ export default class AddSpriteList extends React.Component {
 
   onSaveProject(e) {
     e.preventDefault();
-    const url = "http://localhost:8080/api/sprite/create";
+    const url = ConfigServer.host + "/api/sprite/create";
     var name = this.state.name;
     var arrayTags2 = [];
     var arrayCostumes2 = [];
@@ -247,7 +248,7 @@ export default class AddSpriteList extends React.Component {
   }
 
   getImageList() {
-    const apiUrl = "http://localhost:8080/api/fileasset/getAllByType/image";
+    const apiUrl = ConfigServer.host + "/api/fileasset/getAllByType/image";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -267,7 +268,7 @@ export default class AddSpriteList extends React.Component {
   }
 
   getSoundList() {
-    const apiUrl = "http://localhost:8080/api/fileasset/getAllByType/sound";
+    const apiUrl = ConfigServer.host+ "/api/fileasset/getAllByType/sound";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {

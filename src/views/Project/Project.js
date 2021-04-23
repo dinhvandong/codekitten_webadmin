@@ -23,6 +23,7 @@ import { Button } from "react-bootstrap";
 import { Create } from "@material-ui/icons";
 import AddProject from './AddProject'
 import AddMore from "./AddMore";
+import { ConfigServer } from "../../config_server";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -92,7 +93,7 @@ export default class Project extends React.Component {
   }
 
   componentDidMount() {
-    const apiUrl = "http://localhost:8080/api/project/getAll";
+    const apiUrl = ConfigServer.host + "/api/project/getAll";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {

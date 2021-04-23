@@ -22,6 +22,7 @@ import { Paper, TablePagination } from "@material-ui/core";
 import { Button } from "react-bootstrap";
 import { Create } from "@material-ui/icons";
 import AddMore from "./AddNotification";
+import { ConfigServer } from "../../config_server";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -91,7 +92,7 @@ export default class Notifications extends React.Component {
   }
 
   componentDidMount() {
-    const apiUrl = "http://localhost:8080/api/fileasset/getAll";
+    const apiUrl = ConfigServer.host + "/api/fileasset/getAll";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {

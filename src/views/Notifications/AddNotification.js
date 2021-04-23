@@ -3,6 +3,7 @@ import Modal from "react-awesome-modal";
 import AddMoreCss from "./AddNotification.css";
 import iconCat from "../../assets/img/ic_cat.svg";
 import iconExit from "../../assets/img/ic_exit.png";
+import { ConfigServer } from "../../config_server";
 //import iconAvatar from "./img_avatar2.png";
 
 export default class AddNotification extends React.Component {
@@ -47,7 +48,7 @@ export default class AddNotification extends React.Component {
     var input = document.querySelector('input[type="file"]')
     const formData = new FormData();
     // const  link_download = ConfigServer.host +'/api/upload';
-     const url = "http://localhost:8080/api/fileasset/create";
+     const url = ConfigServer.host + "/api/fileasset/create";
     // const file = new File([blob], filename);
      formData.append("file", input.files[0]);
      formData.append("name", this.state.projectName);

@@ -73,14 +73,14 @@ const dashboardRoutes = [
     component: BackDropList,
     layout: "/admin"
   },
-  {
-    path: "/notifications",
-    name: "Thông báo",
-    rtlName: "إخطارات",
-    icon: Notifications,
-    component: NotificationsPage,
-    layout: "/admin"
-  }
+  // {
+  //   path: "/notifications",
+  //   name: "Thông báo",
+  //   rtlName: "إخطارات",
+  //   icon: Notifications,
+  //   component: NotificationsPage,
+  //   layout: "/admin"
+  // }
 ];
 
 export default dashboardRoutes;

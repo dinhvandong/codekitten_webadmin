@@ -35,6 +35,7 @@ import MenuBarHOC from "../../containers/menu-bar-hoc.jsx";
 import { Paper, TablePagination } from "@material-ui/core";
 import { autoUpdateProject } from "../../reducers/project-state";
 import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
+import { ConfigServer } from "../../config_server";
 
 class ShowMyProject extends React.Component {
     constructor(props) {
@@ -108,7 +109,7 @@ class ShowMyProject extends React.Component {
     }
 
     componentDidMount() {
-        const apiUrl = 'http://localhost:8080/api/project/getAll';
+        const apiUrl = ConfigServer.host + '/api/project/getAll';
         fetch(apiUrl)
           .then((response) => response.json())
           .then((data) => {
