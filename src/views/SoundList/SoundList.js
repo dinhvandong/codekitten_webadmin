@@ -149,9 +149,23 @@ export default class ImageList extends React.Component {
       <div style={{ flex: 1,
         justifyContent: 'center',
         alignItems: 'center',}}>
-      <button style={{marginBottom:20, width:60, height:40, borderRadius:5}} onClick = {this.onClickShowpopUp}>
-      <PlushOne style={{ alignSelf:'center'}} />
-      </button>
+        <div style={{display:"flex", flexDirection:"row", }}>
+        <button style={{marginBottom:20, width:60, height:40, borderRadius:5}} onClick = {this.onClickShowpopUp}>
+        <PlushOne style={{ alignSelf:'center'}} />
+        </button>
+  
+        <div style={{width:"100%"}}>
+        </div>
+  
+        <div >
+      <form style={{display:"flex", flexDirection:"row"}}>
+      <input style={{width:"300px"}} type="text" placeholder="Tìm kiếm.." name="search"/>
+      <button style={{width:'50px', height:'auto'}} type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+  
+        </div>
+  
       <Paper
           style={{
             backgroundColor: "#FFF",
