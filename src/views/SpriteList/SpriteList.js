@@ -255,7 +255,7 @@ export default class SpriteList extends React.Component {
                             height: 75,
                             borderRadius: 5,
                           }}
-                          src={"http://" + row.costumes[0].base64}
+                          src={ row.costumes[0].base64}
                         />
                       </div>{" "}
                     </TableCell>
@@ -264,7 +264,7 @@ export default class SpriteList extends React.Component {
                       align="right"
                     >
                       <div style={{ whiteSpace: "pre-line" }}>
-                        <a href={"http://" + row.costumes[0].base64}>
+                        <a href={row.costumes[0].base64}>
                           <u>Copy link</u>
                         </a>
                       </div>
