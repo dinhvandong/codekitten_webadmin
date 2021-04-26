@@ -141,8 +141,15 @@ export default class AddSpriteList extends React.Component {
     console.log("ArrayVlue:", Array.isArray(e) ? e.map((x) => x.value) : []);
   };
 
+   getFilenameFromUrl(url) {
+    const pathname = new URL(url).pathname;
+    const index = pathname.lastIndexOf('/');
+    return (-1 !== index) ? pathname.substring(index + 1) : pathname;
+  };
+  
+
   onSaveProject(e) {
-    e.preventDefault();
+   // e.preventDefault();
     const url = ConfigServer.host + "/api/sprite/create";
     var name = this.state.name;
     var arrayTags2 = [];
@@ -175,10 +182,12 @@ export default class AddSpriteList extends React.Component {
       for (j = 0; j < this.state.arrayImagesDefault.length; j++) {
         console.log("arrayImagesDefault", this.state.arrayImagesDefault[j]._id);
         if (_id == this.state.arrayImagesDefault[j]._id) {
-          costumeModel.assetId = this.state.arrayImagesDefault[j].name;
-          costumeModel.name = this.state.arrayImagesDefault[j].name;
-          costumeModel.dataFormat = this.state.arrayImagesDefault[j].fileextend;
           costumeModel.base64 = this.state.arrayImagesDefault[j].url;
+          costumeModel.assetId = this.getFilenameFromUrl(this.state.arrayImagesDefault[j].url).split(".")[0];
+          costumeModel.dataFormat = this.state.arrayImagesDefault[j].fileextend;
+
+          costumeModel.md5ext = this.getFilenameFromUrl(this.state.arrayImagesDefault[j].url).split(".")[0] + "."+ this.state.arrayImagesDefault[j].fileextend;
+          costumeModel.name = this.state.arrayImagesDefault[j].name;
           arrayCostumes2.push(costumeModel);
           break;
         }
