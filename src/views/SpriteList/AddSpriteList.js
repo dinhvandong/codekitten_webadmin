@@ -98,7 +98,7 @@ export default class AddSpriteList extends React.Component {
     this.props.closePopUp();
   };
   _handleImageChange(e) {
-    e.preventDefault();
+    //e.preventDefault();
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {

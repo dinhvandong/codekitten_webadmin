@@ -30,7 +30,7 @@ export default class AddSoundList extends React.Component {
 
   }
   _handleImageChange(e) {
-    e.preventDefault();
+   // e.preventDefault();
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {
