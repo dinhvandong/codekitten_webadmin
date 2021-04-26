@@ -97,11 +97,15 @@ export default class AddBackDropList extends React.Component {
     const url = ConfigServer.host + "/api/asset/create";
     const name = this.state.name;
     const base64 = this.state.imagePreviewUrl;
-    const assetId = this.state.name;
+
+    var fileName = base64.split('/').pop();
+
+    const assetId = fileName.split(".")[0];
     const tags = this.state.arrayTagsString;
     const bitmapResolution = 1;
-    const md5ext = this.state.name;
     const dataFormat = base64.split('.').pop();
+
+    const md5ext = fileName.split(".")[0] + "." + dataFormat;
     const rotationCenterX = 240;
     const rotationCenterY = 180;
     const type = "backdrop";
@@ -111,10 +115,10 @@ export default class AddBackDropList extends React.Component {
     {
       name: name,
       base64: base64,
-      assetId: md5(name),
+      assetId: assetId,
       tags: tags,
       bitmapResolution: bitmapResolution,
-      md5ext: md5(name)+ "."+ dataFormat,
+      md5ext: md5ext,
       dataFormat: dataFormat,
       rotationCenterX: rotationCenterX,
       rotationCenterY: rotationCenterY,
