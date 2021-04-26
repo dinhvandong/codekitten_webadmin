@@ -283,7 +283,7 @@ export default class ImageList extends React.Component {
                         <audio id="myAudio" 
                         
                         >
-                        <source src={"http://"+row.url} type="audio/wav"/>
+                        <source src={row.url} type="audio/wav"/>
 
                         
                         </audio>
@@ -296,7 +296,7 @@ export default class ImageList extends React.Component {
                     align="right"
                   >
                   <div style={{whiteSpace:'pre-line'}}>
-                  <a href={"http://"+row.url}><u>Copy link</u></a>
+                  <a href={row.url}><u>Copy link</u></a>
                   </div>
                    
                   </TableCell>
