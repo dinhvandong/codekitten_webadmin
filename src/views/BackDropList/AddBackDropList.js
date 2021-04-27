@@ -92,7 +92,7 @@ export default class AddBackDropList extends React.Component {
   };
 
   onSaveProject(e) {
-    //e.preventDefault();
+    e.preventDefault();
 
     const url = ConfigServer.host + "/api/asset/create";
     const name = this.state.name;

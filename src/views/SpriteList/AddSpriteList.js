@@ -149,7 +149,7 @@ export default class AddSpriteList extends React.Component {
   
 
   onSaveProject(e) {
-   // e.preventDefault();
+    e.preventDefault();
     const url = ConfigServer.host + "/api/sprite/create";
     var name = this.state.name;
     var arrayTags2 = [];
