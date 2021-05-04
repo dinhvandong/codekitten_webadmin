@@ -17,6 +17,10 @@ export default class AddBackDropList extends React.Component {
       name: "",
       link_image: "",
       arrayTags: [],
+      arrayImagesDisplay: [],
+      arrayImagesString: [],
+
+
       arrayTagsDefault: [],
       arrayTagsDisplay: [
         {
@@ -138,6 +142,27 @@ export default class AddBackDropList extends React.Component {
     console.log("name", event.target.value);
   }
 
+  getImageList() {
+    const apiUrl = ConfigServer.host + "/api/fileasset/getAllByType/image";
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ arrayImagesDefault: data });
+
+        var i;
+        var arrayImagesDisplay = [];
+        for (i = 0; i < this.state.arrayImagesDefault.length; i++) {
+          const value = this.state.arrayImagesDefault[i]._id;
+          const label = this.state.arrayImagesDefault[i].name;
+          const url = this.state.arrayImagesDefault[i].url;
+          var imageObject = { value: value, label: label , url: url};
+          arrayImagesDisplay.push(imageObject);
+        }
+
+        this.setState({ arrayImagesDisplay: arrayImagesDisplay });
+      });
+  }
+
   myChangeHandlerDesc(event) {
     event.preventDefault();
     this.setState({ link_image: event.target.value });
@@ -147,6 +172,26 @@ export default class AddBackDropList extends React.Component {
 
     console.log("link_image", event.target.value);
   }
+
+  componentDidMount()
+  {
+
+    this.getImageList();
+
+  }
+  onChangeImages = (e) => {
+    this.setState({
+      arrayImagesString: Array.isArray(e) ? e.map((x) => x.url) : [],
+    });
+    console.log("ArrayVlue:", Array.isArray(e) ? e.map((x) => x.url) : []);
+
+    var arrayLinks = Array.isArray(e) ? e.map((x) => x.url) : [];
+
+    this.setState({ link_image:arrayLinks[0]});
+    this.state.link_image = arrayLinks[0];
+    this.setState({ imagePreviewUrl: arrayLinks[0] });
+  };
+
 
   render() {
     const animatedComponents = makeAnimated();
@@ -271,13 +316,31 @@ export default class AddBackDropList extends React.Component {
                     <b>URL</b>
                   </label>
                   <input
-                    onChange={this.myChangeHandlerDesc}
                     type="text"
+                    value={this.state.link_image}
                     placeholder="Link hình ảnh"
                     name="uname"
                     required
                   />
                 </div>
+                <div style={{ width: "100%" }}>
+
+                <label for="uname">
+                    <b>Chọn hình ảnh</b>
+                  </label>
+                  <Select
+                    onChange={this.onChangeImages}
+                    closeMenuOnSelect={false}
+                    components={animatedComponents}
+                    defaultValue={[this.state.arrayImagesDisplay[0]]}
+                    isMulti
+                    options={this.state.arrayImagesDisplay}
+                  />
+
+
+                </div>
+
+                
                 <div style={{ width: "100%" }}>
                   <label for="uname">
                     <b>Tên hình ảnh</b>
