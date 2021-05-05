@@ -108,7 +108,7 @@ export default class BackDropList extends React.Component {
   }
   deleteBackDrop(id)
   {
-    const apiUrl = ConfigServer.host + "/asset/delete/"+ id;
+    const apiUrl = ConfigServer.host + "/api/asset/delete/"+ id;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
