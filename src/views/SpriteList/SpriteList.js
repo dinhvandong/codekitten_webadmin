@@ -84,6 +84,28 @@ export default class SpriteList extends React.Component {
   convertStringtoDate(dateString) {
     return new Date(dateString);
   }
+  handleClickDelete = (id, column) => {
+    return (event) => {
+
+      //handleClickDelete
+
+      this.deleteSprite(id);
+
+
+
+      //console.log(`You clicked on row with id ${id}, in column ${column}.`);
+    }
+  }
+  deleteSprite(id)
+  {
+    const apiUrl = ConfigServer.host + "/api/sprite/delete/"+ id;
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        //this.setState({ fileAssets: data });
+        this.reload();
+      });
+  }
 
   formatDate(date) {
     var d = new Date(date),
@@ -272,7 +294,7 @@ export default class SpriteList extends React.Component {
                     <TableCell align="right">
                       <CreateIcon />
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell onClick={this.handleClickDelete(row._id, "protein")} align="right">
                       <DeleteIcon />{" "}
                     </TableCell>
                   </TableRow>

@@ -82,6 +82,29 @@ export default class BackDropList extends React.Component {
     return new Date(dateString);
   }
 
+  handleClickDelete = (id, column) => {
+    return (event) => {
+
+      //handleClickDelete
+
+      this.deleteBackDrop(id);
+
+
+
+      //console.log(`You clicked on row with id ${id}, in column ${column}.`);
+    }
+  }
+  deleteBackDrop(id)
+  {
+    const apiUrl = ConfigServer.host + "/api/backdrop/delete/"+ id;
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        //this.setState({ fileAssets: data });
+        this.reload();
+      });
+  }
+
   formatDate(date) {
     var d = new Date(date),
       month = "" + (d.getMonth() + 1),
@@ -301,7 +324,7 @@ export default class BackDropList extends React.Component {
                     <TableCell align="right">
                       <CreateIcon />
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell onClick={this.handleClickDelete(row._id, "protein")} align="right">
                       <DeleteIcon />{" "}
                     </TableCell>
                   </TableRow>
