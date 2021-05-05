@@ -51,6 +51,7 @@ export default class ImageList extends React.Component {
     this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
     this.onClickShowpopUp = this.onClickShowpopUp.bind(this);
     this.onClickClosePopup = this.onClickClosePopup.bind(this);
+    this.handleCellClick = this.handleCellClick.bind(this);
     this.state = { fileAssets: [], page: 0, rowsPerPage: 5, emptyRows: 0 , showpopup:false};
     this.state.fileAssets = [];
     this.state.page = 0;
@@ -91,12 +92,33 @@ export default class ImageList extends React.Component {
     return [year, month, day].join("-");
   }
 
+  reload()
+  {
+    const apiUrl = ConfigServer.host + "/api/fileasset/getAllByType/image";
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ fileAssets: data });
+      });
+
+  }
   componentDidMount() {
     const apiUrl = ConfigServer.host + "/api/fileasset/getAllByType/image";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
         this.setState({ fileAssets: data });
+      });
+  }
+
+  deleteImage(id)
+  {
+    const apiUrl = ConfigServer.host + "/api/fileasset/delete/"+ id;
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        //this.setState({ fileAssets: data });
+        this.reload();
       });
   }
 
@@ -111,6 +133,30 @@ export default class ImageList extends React.Component {
     newDate.setHours(hours - offset);
 
     return newDate;
+  }
+
+  handleClick = (id, column) => {
+    return (event) => {
+      console.log(`You clicked on row with id ${id}, in column ${column}.`);
+    }
+  }
+
+  handleClickDelete = (id, column) => {
+    return (event) => {
+
+      //handleClickDelete
+
+      this.deleteImage(id);
+
+
+
+      //console.log(`You clicked on row with id ${id}, in column ${column}.`);
+    }
+  }
+   handleCellClick (id) {
+
+    console.log("XXXXXX:",id);
+    //console.log(e.target.textContent);
   }
 
   onClickShowpopUp()
@@ -304,10 +350,10 @@ export default class ImageList extends React.Component {
                   </div>
                    
                   </TableCell>
-                    <TableCell align="right">
+                    <TableCell onClick={this.handleClick(row._id, "calories")} align="right">
                       <CreateIcon />
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell  onClick={this.handleClickDelete(row._id, "protein")} align="right">
                       <DeleteIcon />{" "}
                     </TableCell>
                   </TableRow>

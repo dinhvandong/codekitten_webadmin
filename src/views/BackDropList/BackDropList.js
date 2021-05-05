@@ -22,6 +22,8 @@ import { Paper, TablePagination } from "@material-ui/core";
 import { Button } from "react-bootstrap";
 import { Create } from "@material-ui/icons";
 import AddMore from "./AddBackDropList";
+import UpdatePopup from "./UpdateBackDropList";
+
 import { ConfigServer } from "../../config_server";
 const styles = {
   cardCategoryWhite: {
@@ -55,6 +57,7 @@ export default class BackDropList extends React.Component {
     this.state.fileAssets = [];
     this.state.page = 0;
     this.state.showpopup = false;
+    this.state.showupdate = false;
     this.state.rowsPerPage = 5;
     this.state.emptyRows =
       this.state.rowsPerPage -
@@ -113,6 +116,10 @@ export default class BackDropList extends React.Component {
     return newDate;
   }
 
+  onClickShowUpdate()
+  {
+    this.setState({showupdate: true});
+  }
   onClickShowpopUp()
   {
 
@@ -126,6 +133,13 @@ export default class BackDropList extends React.Component {
 
   }
 
+  onClickCloseUpdate()
+  {
+    this.setState({showupdate:false});
+
+
+  }
+
   render() {
     const { fileAssets } = this.state;
     const { page } = this.state;
@@ -135,6 +149,7 @@ export default class BackDropList extends React.Component {
 
     const { rowsPerPage } = this.state;
     const {showpopup} = this.state;
+    const {showupdate} = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, fileAssets.length - page * rowsPerPage);
 
@@ -336,6 +351,16 @@ export default class BackDropList extends React.Component {
 
        
         </div>
+
+        <div>
+
+        {
+            showupdate ? <UpdatePopup closeUpdate={this.onClickCloseUpdate}  />
+            :<div></div> 
+        }  
+
+   
+    </div>
 
        
         
