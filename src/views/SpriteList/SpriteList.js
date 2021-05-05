@@ -96,6 +96,17 @@ export default class SpriteList extends React.Component {
       //console.log(`You clicked on row with id ${id}, in column ${column}.`);
     }
   }
+
+  reload()
+  {
+    const apiUrl = ConfigServer.host+ "/api/sprite/getAll";
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ spriteList: data });
+      });
+
+  }
   deleteSprite(id)
   {
     const apiUrl = ConfigServer.host + "/api/sprite/delete/"+ id;

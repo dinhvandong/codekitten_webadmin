@@ -94,6 +94,18 @@ export default class BackDropList extends React.Component {
       //console.log(`You clicked on row with id ${id}, in column ${column}.`);
     }
   }
+
+  reload()
+  {
+
+    const apiUrl = ConfigServer.host + "/api/asset/getByType/backdrop";
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ fileAssets: data });
+      });
+
+  }
   deleteBackDrop(id)
   {
     const apiUrl = ConfigServer.host + "/api/backdrop/delete/"+ id;
